@@ -19,12 +19,12 @@ import {
 export const ResaurantInfoCard = ({ resturant = {} }) => {
   const {
     name = "some resturant",
-    icon = require("../../../../assets/bed-icon.png"),
+    icon = "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
     photos = ["https://source.unsplash.com/random"],
     address = "som ware",
-    isOpen = true,
+    isOpenNow = true,
     rating = 4,
-    isClosedTemporarily = false,
+    isClosed = false,
   } = resturant;
 
   const stars = Array.from(new Array(Math.floor(rating))).map((val, i) => (
@@ -33,15 +33,20 @@ export const ResaurantInfoCard = ({ resturant = {} }) => {
 
   return (
     <RestaurantCard elevation={5}>
-      <RestaurantCardCover key={name} source={{ uri: photos[0] }} />
+      <RestaurantCardCover
+        key={name}
+        source={{
+          uri: photos[0],
+        }}
+      />
       <Info>
         <Title>{name}</Title>
         <RatingOpenCloseWrapper>
           <Rating>{stars}</Rating>
           <OpenCloseWrapper>
-            {isClosedTemporarily && <ClosedText> Closed </ClosedText>}
-            {isOpen && <Open xml={open} />}
-            <Bed source={icon} />
+            {!isOpenNow && <ClosedText> Closed </ClosedText>}
+            {isOpenNow && <Open xml={open} />}
+            <Bed source={{ uri: icon }} />
           </OpenCloseWrapper>
         </RatingOpenCloseWrapper>
         <Address>{address}</Address>
